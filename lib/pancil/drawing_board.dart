@@ -13,8 +13,14 @@ class CustomKeyboard extends StatefulWidget {
 class _CustomKeyboardState extends State<CustomKeyboard> {
   var style = const TextStyle(fontSize: 18);
   var iconSize = 30.0;
+
   @override
   Widget build(BuildContext context) {
+    drawingController.setStyle(
+        color: Colors.black,
+        strokeWidth: 10,
+        isAntiAlias: true,
+        style: PaintingStyle.stroke);
     return Expanded(
       child: SizedBox(
         height: 100,
@@ -171,8 +177,6 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                     color: Colors.black12,
                     child: DrawingBoard(
                       alignment: Alignment.center,
-                      // boardPanEnabled: false,
-                      // boardScaleEnabled: false,
                       boardConstrained: true,
                       boardBoundaryMargin: const EdgeInsets.all(100),
                       controller: drawingController,
@@ -185,7 +189,6 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                     ),
                   ),
                 ),
-                // if()
                 const SizedBox(
                   height: 10,
                 )

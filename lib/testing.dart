@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image/image.dart' as IMG;
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_keyboard_size/flutter_keyboard_size.dart';
 import 'package:testing/pancil/drawing_board.dart';
 
@@ -16,25 +16,27 @@ class _TestingState extends State<Testing> {
   bool isKeyboard = true;
   @override
   Widget build(BuildContext context) {
-    // Future<Uint8List> testComporessList(Uint8List list) async {
-    //   var result = await FlutterImageCompress.compressWithList(
-    //     list,
-    //     minHeight: 100,
-    //     minWidth: 100,
-    //   );
-    //   debugPrint(list.length.toString());
-    //   debugPrint(result.length.toString());
-    //   return result;
-    // }
-
-    Uint8List resizeImage(Uint8List data) {
-      Uint8List resizedData = data;
-      IMG.Image? img = IMG.decodeImage(data);
-      IMG.Image resized = IMG.copyResize(img!,
-          width: 100, height: 100, interpolation: IMG.Interpolation.average);
-      resizedData = IMG.encodeJpg(resized);
-      return resizedData;
+    Future<Uint8List> testComporessList(Uint8List list) async {
+      var result = await FlutterImageCompress.compressWithList(list,
+          minHeight: 100,
+          minWidth: 100,
+          quality: 100,
+          inSampleSize: 5,
+          keepExif: true,
+          autoCorrectionAngle: false);
+      debugPrint(list.length.toString());
+      debugPrint(result.length.toString());
+      return result;
     }
+
+    // Uint8List resizeImage(Uint8List data) {
+    //   Uint8List resizedData = data;
+    //   IMG.Image? img = IMG.decodeImage(data);
+    //   IMG.Image resized = IMG.copyResize(img!,
+    //       width: 100, height: 100, interpolation: IMG.Interpolation.average);
+    //   resizedData = IMG.encodeJpg(resized);
+    //   return resizedData;
+    // }
 
     Future<void> getImageData() async {
       try {
@@ -47,12 +49,12 @@ class _TestingState extends State<Testing> {
         // debugPrint('data base64 : $encoded2');
 
         // get uint8list with compress image....!!!
-        // var image = await testComporessList(data!);
-        // debugPrint('==> Image : ${image.toString()}');
-
-        // get uint8List with resize image....!!!
-        var image = resizeImage(data!);
+        var image = await testComporessList(data!);
         debugPrint('==> Image : ${image.toString()}');
+
+        // // get uint8List with resize image....!!!
+        // var image = resizeImage(data!);
+        // debugPrint('==> Image : ${image.toString()}');
 
         // base64 encoding bytes
         var encoded2 = base64.encode(image);
