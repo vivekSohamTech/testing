@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:testing/model/controller.dart';
-import 'package:testing/testing.dart';
+import 'package:testing/pancil/keyboard_selector.dart';
 
-main() {
+void main() {
   runApp(const Myapp());
 }
 
@@ -12,11 +10,8 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => Controller(),
-      child: const MaterialApp(
-        home: Testing(),
-      ),
+    return const MaterialApp(
+      home: KeyboardSelector(),
     );
   }
 }
