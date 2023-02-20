@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:testing/pancil/keyboard_selector.dart';
 
-void main() {
-  runApp(const Myapp());
+Future<void> main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform );
+  runApp(
+    const Myapp(),
+  );
 }
 
 class Myapp extends StatelessWidget {

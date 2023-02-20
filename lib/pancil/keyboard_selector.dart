@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_drawing_board/paint_contents.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_keyboard_size/flutter_keyboard_size.dart';
 import 'package:testing/pancil/drawing_board.dart';
@@ -17,6 +18,35 @@ class _KeyboardSelectorState extends State<KeyboardSelector> {
   @override
   Widget build(BuildContext context) {
 
+    final Map<String, dynamic> testLine1 = <String, dynamic>{
+      'type': 'StraightLine',
+      'startPoint': <String, dynamic>{
+        'dx': 68.94337550070736,
+        'dy': 62.05980083656557
+      },
+      'endPoint': <String, dynamic>{
+        'dx': 277.1373386828114,
+        'dy': 277.32029957032194
+      },
+      'paint': <String, dynamic>{
+        'blendMode': 3,
+        'color': 4294198070,
+        'filterQuality': 3,
+        'invertColors': false,
+        'isAntiAlias': false,
+        'strokeCap': 1,
+        'strokeJoin': 1,
+        'strokeWidth': 4.0,
+        'style': 1
+      }
+    };
+
+    void addTestLine() {
+    drawingController.addContent(StraightLine.fromJson(testLine1));
+      // drawingController
+      //     .addContents(<PaintContent>[StraightLine.fromJson(_testLine2)]
+      // );
+    }
 
     //Flutter_Image_Compress...!!
     Future<Uint8List> getImageCompress(Uint8List list) async {
@@ -225,6 +255,7 @@ class _KeyboardSelectorState extends State<KeyboardSelector> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       onPressed: () {
+                                        // _addTestLine();
                                         getImageData();
                                       },
                                     )),

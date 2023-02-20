@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
+import 'package:flutter_drawing_board/paint_contents.dart';
+import 'package:flutter_drawing_board/paint_extension.dart';
+
+import 'models/triangle.dart';
 
 final DrawingController drawingController = DrawingController();
 
@@ -18,9 +22,11 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
   Widget build(BuildContext context) {
     drawingController.setStyle(
         color: Colors.black,
-        strokeWidth: 10,
+        strokeWidth: 12,
         isAntiAlias: true,
-        style: PaintingStyle.stroke);
+        style: PaintingStyle.stroke,
+        strokeCap: StrokeCap.round);
+
     return Expanded(
       child: SizedBox(
         height: 100,
@@ -39,7 +45,9 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                               backgroundColor: MaterialStateProperty.all(
                             const Color.fromRGBO(170, 217, 255, 1),
                           )),
-                          onPressed: () {},
+                          onPressed: () {
+                            drawingController.setPaintContent = SimpleLine();
+                          },
                           child: ListTile(
                             leading: Icon(
                               Icons.mode_edit_outline_outlined,
@@ -58,7 +66,9 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                               backgroundColor: MaterialStateProperty.all(
                             const Color.fromRGBO(170, 217, 255, 1),
                           )),
-                          onPressed: () {},
+                          onPressed: () {
+                            drawingController.setPaintContent = Rectangle();
+                          },
                           child: ListTile(
                             leading: Icon(
                               Icons.square_outlined,
@@ -73,7 +83,9 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                       ),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            drawingController.setPaintContent = Circle();
+                          },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                             const Color.fromRGBO(170, 217, 255, 1),
@@ -96,7 +108,9 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                               backgroundColor: MaterialStateProperty.all(
                             const Color.fromRGBO(170, 217, 255, 1),
                           )),
-                          onPressed: () {},
+                          onPressed: () {
+                            drawingController.setPaintContent = Triangle();
+                          },
                           child: ListTile(
                             leading: Icon(
                               Icons.change_history_outlined,
@@ -130,7 +144,9 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                       ),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            drawingController.setPaintContent = StraightLine();
+                          },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                             const Color.fromRGBO(170, 217, 255, 1),
@@ -178,14 +194,20 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                     child: DrawingBoard(
                       alignment: Alignment.center,
                       boardConstrained: true,
+                      boardPanEnabled: false,
+                      boardAlignPanAxis: true,
                       boardBoundaryMargin: const EdgeInsets.all(100),
                       controller: drawingController,
                       background: Container(
+                          alignment: Alignment.center,
                           width: MediaQuery.of(context).size.width,
+                          foregroundDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20)),
                           height: MediaQuery.of(context).size.height,
-                          color: Colors.white),
+                          color: const Color.fromARGB(255, 255, 255, 255)),
                       showDefaultActions: false,
                       showDefaultTools: false,
+                      boardScaleEnabled: false,
                     ),
                   ),
                 ),
