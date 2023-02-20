@@ -1,7 +1,7 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
-import 'package:flutter_drawing_board/paint_extension.dart';
 
 import 'models/triangle.dart';
 
@@ -188,26 +188,48 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                 ),
                 Expanded(
                   child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(100),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    color: Colors.black12,
-                    child: DrawingBoard(
-                      alignment: Alignment.center,
-                      boardConstrained: true,
-                      boardPanEnabled: false,
-                      boardAlignPanAxis: true,
-                      boardBoundaryMargin: const EdgeInsets.all(100),
-                      controller: drawingController,
-                      background: Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width,
-                          foregroundDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)),
-                          height: MediaQuery.of(context).size.height,
-                          color: const Color.fromARGB(255, 255, 255, 255)),
-                      showDefaultActions: false,
-                      showDefaultTools: false,
-                      boardScaleEnabled: false,
+                    child: DottedBorder(
+                      color: Colors.grey,
+                      strokeWidth: 2,
+                      strokeCap: StrokeCap.round,
+                      radius: const Radius.circular(20),
+                      dashPattern: const [15, 10],
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          DrawingBoard(
+                            alignment: Alignment.center,
+                            boardConstrained: true,
+                            boardPanEnabled: false,
+                            boardAlignPanAxis: true,
+                            boardBoundaryMargin: const EdgeInsets.all(100),
+                            controller: drawingController,
+                            background: Container(
+                                alignment: Alignment.center,
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                foregroundDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20)),
+                                color:
+                                    const Color.fromARGB(255, 255, 255, 255)),
+                            showDefaultActions: false,
+                            showDefaultTools: false,
+                            boardScaleEnabled: false,
+                          ),
+                          Text(
+                            'Draw Here',
+                            style: TextStyle(
+                                color: Colors.grey.shade300,
+                                wordSpacing: 8,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
