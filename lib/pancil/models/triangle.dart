@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
 import 'package:flutter_drawing_board/paint_extension.dart';
@@ -35,10 +34,15 @@ class Triangle extends PaintContent {
 
   @override
   void drawing(Offset nowPoint) {
+    debugPrint(nowPoint.toString());
+    debugPrint(startPoint.toString());
     A = Offset(
         startPoint.dx + (nowPoint.dx - startPoint.dx) / 2, startPoint.dy);
+    debugPrint('==> A : ${A.toString()}');
     B = Offset(startPoint.dx, nowPoint.dy);
+    debugPrint('==> B : ${B.toString()}');
     C = nowPoint;
+    debugPrint('==> C : ${C.toString()}');
   }
 
   @override

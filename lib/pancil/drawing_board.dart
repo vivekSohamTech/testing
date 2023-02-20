@@ -2,6 +2,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
+import 'package:testing/pancil/models/Star.dart';
+import 'package:testing/pancil/models/arrow.dart';
 
 import 'models/triangle.dart';
 
@@ -22,7 +24,7 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
   Widget build(BuildContext context) {
     drawingController.setStyle(
         color: Colors.black,
-        strokeWidth: 12,
+        strokeWidth: 8,
         isAntiAlias: true,
         style: PaintingStyle.stroke,
         strokeCap: StrokeCap.round);
@@ -125,7 +127,9 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                       ),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            drawingController.setPaintContent = Star();
+                          },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                             const Color.fromRGBO(170, 217, 255, 1),
@@ -170,7 +174,9 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                               backgroundColor: MaterialStateProperty.all(
                             const Color.fromRGBO(170, 217, 255, 1),
                           )),
-                          onPressed: () {},
+                          onPressed: () {
+                            drawingController.setPaintContent = Arrow();
+                          },
                           child: ListTile(
                             leading: Icon(
                               Icons.call_made_outlined,
