@@ -9,11 +9,12 @@ class Arrow extends PaintContent {
     required this.startPoint,
     required this.A,
     required this.B,
-    // required this.C,
-    // required this.D,
-    // required this.E,
-    // required this.F,
+    required this.C,
+    required this.D,
+    required this.E,
+    required this.F,
     required this.G,
+    required this.H,
     required Paint paint,
   }) : super.paint(paint);
 
@@ -22,11 +23,12 @@ class Arrow extends PaintContent {
       startPoint: jsonToOffset(data['startPoint'] as Map<String, dynamic>),
       A: jsonToOffset(data['A'] as Map<String, dynamic>),
       B: jsonToOffset(data['B'] as Map<String, dynamic>),
-      // C: jsonToOffset(data['C'] as Map<String, dynamic>),
-      // D: jsonToOffset(data['D'] as Map<String, dynamic>),
-      // E: jsonToOffset(data['E'] as Map<String, dynamic>),
-      // F: jsonToOffset(data['F'] as Map<String, dynamic>),
+      C: jsonToOffset(data['C'] as Map<String, dynamic>),
+      D: jsonToOffset(data['D'] as Map<String, dynamic>),
+      E: jsonToOffset(data['E'] as Map<String, dynamic>),
+      F: jsonToOffset(data['F'] as Map<String, dynamic>),
       G: jsonToOffset(data['G'] as Map<String, dynamic>),
+      H: jsonToOffset(data['H'] as Map<String, dynamic>),
       paint: jsonToPaint(data['paint'] as Map<String, dynamic>),
     );
   }
@@ -35,11 +37,12 @@ class Arrow extends PaintContent {
 
   Offset A = Offset.zero;
   Offset B = Offset.zero;
-  // Offset C = Offset.zero;
-  // Offset D = Offset.zero;
-  // Offset E = Offset.zero;
-  // Offset F = Offset.zero;
+  Offset C = Offset.zero;
+  Offset D = Offset.zero;
+  Offset E = Offset.zero;
+  Offset F = Offset.zero;
   Offset G = Offset.zero;
+  Offset H = Offset.zero;
 
   @override
   void startDraw(Offset startPoint) => this.startPoint = startPoint;
@@ -49,25 +52,34 @@ class Arrow extends PaintContent {
     debugPrint(startPoint.toString());
     debugPrint(nowPoint.toString());
 
-    A = Offset(nowPoint.dx, startPoint.dy);
+    A = Offset(nowPoint.dx, nowPoint.dy);
     debugPrint('==> A : ${A.toString()}');
 
-    B = Offset(startPoint.dx, nowPoint.dy);
+    B = Offset(startPoint.dx, startPoint.dy);
     debugPrint('==> B : ${B.toString()}');
 
-    // C = Offset(nowPoint.dx, startPoint.dy + 30);
-    // debugPrint('==> C : ${C.toString()}');
+    C = Offset(nowPoint.dx, nowPoint.dy);
+    debugPrint('==> C : ${C.toString()}');
 
-    // D = Offset(startPoint.dx + 30, nowPoint.dy);
+    D = Offset(nowPoint.dx, nowPoint.dy - (nowPoint.dy - startPoint.dy) / 2);
+    debugPrint('==> D : ${D.toString()}');
+
+    // D = Offset(nowPoint.dx, nowPoint.dy - (startPoint.dy) / 2);
     // debugPrint('==> D : ${D.toString()}');
 
-    // E = Offset(nowPoint.dx, startPoint.dy - 30);
-    // debugPrint('==> E : ${E.toString()}');
+    E = Offset(nowPoint.dx, nowPoint.dy);
+    debugPrint('==> E : ${E.toString()}');
 
-    // F = Offset(startPoint.dx - 30, nowPoint.dy);
+    F = Offset(nowPoint.dx - (nowPoint.dx - startPoint.dx) / 2, nowPoint.dy);
+    debugPrint('==> F : ${F.toString()}');
+
+    // F = Offset(nowPoint.dx - (startPoint.dx) / 2, nowPoint.dy);
     // debugPrint('==> F : ${F.toString()}');
 
-    G = startPoint;
+    H = Offset(nowPoint.dx, nowPoint.dy);
+    debugPrint('==> H : ${H.toString()}');
+
+    G = nowPoint;
     debugPrint('==> G : ${G.toString()}');
   }
 
@@ -76,11 +88,12 @@ class Arrow extends PaintContent {
     final Path path = Path()
       ..moveTo(A.dx, A.dy)
       ..lineTo(B.dx, B.dy)
-      // ..lineTo(C.dx, C.dy)
-      // ..lineTo(D.dx, D.dy)
-      // ..lineTo(E.dx, E.dy)
-      // ..lineTo(F.dx, F.dy)
+      ..lineTo(C.dx, C.dy)
+      ..lineTo(D.dx, D.dy)
+      ..lineTo(E.dx, E.dy)
+      ..lineTo(F.dx, F.dy)
       ..lineTo(G.dx, G.dy)
+      ..lineTo(H.dx, H.dy)
       ..close();
 
     canvas.drawPath(path, paint);
@@ -95,11 +108,12 @@ class Arrow extends PaintContent {
       'startPoint': startPoint.toJson(),
       'A': A.toJson(),
       'B': B.toJson(),
-      // 'C': C.toJson(),
-      // 'D': D.toJson(),
-      // 'E': E.toJson(),
-      // 'F': F.toJson(),
+      'C': C.toJson(),
+      'D': D.toJson(),
+      'E': E.toJson(),
+      'F': F.toJson(),
       'G': G.toJson(),
+      'H': H.toJson(),
       'paint': paint.toJson(),
     };
   }
