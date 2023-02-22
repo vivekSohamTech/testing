@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
 import 'package:flutter_drawing_board/paint_extension.dart';
+import 'dart:math' as math;
 
 class Arrow extends PaintContent {
   Arrow();
@@ -49,6 +50,14 @@ class Arrow extends PaintContent {
 
   @override
   void drawing(Offset nowPoint) {
+    const arrowSize = 30;
+    const arrowAngle = 25 * math.pi / 180;
+    final p1 = startPoint;
+    final p2 = nowPoint;
+    final dX = p2.dx - p1.dx;
+    final dY = p2.dy - p1.dy;
+    final angle = math.atan2(dY, dX);
+
     debugPrint(startPoint.toString());
     debugPrint(nowPoint.toString());
 
@@ -61,8 +70,11 @@ class Arrow extends PaintContent {
     C = Offset(nowPoint.dx, nowPoint.dy);
     debugPrint('==> C : ${C.toString()}');
 
-    D = Offset(nowPoint.dx, nowPoint.dy - (nowPoint.dy - startPoint.dy) / 2);
+    D = Offset(p2.dx - arrowSize * math.cos(angle - arrowAngle),
+        p2.dy - arrowSize * math.sin(angle - arrowAngle));
     debugPrint('==> D : ${D.toString()}');
+
+//
 
     // D = Offset(nowPoint.dx, nowPoint.dy - (startPoint.dy) / 2);
     // debugPrint('==> D : ${D.toString()}');
@@ -70,7 +82,8 @@ class Arrow extends PaintContent {
     E = Offset(nowPoint.dx, nowPoint.dy);
     debugPrint('==> E : ${E.toString()}');
 
-    F = Offset(nowPoint.dx - (nowPoint.dx - startPoint.dx) / 2, nowPoint.dy);
+    F = Offset(p2.dx - arrowSize * math.cos(angle + arrowAngle),
+        p2.dy - arrowSize * math.sin(angle + arrowAngle));
     debugPrint('==> F : ${F.toString()}');
 
     // F = Offset(nowPoint.dx - (startPoint.dx) / 2, nowPoint.dy);
