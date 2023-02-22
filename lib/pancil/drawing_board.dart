@@ -24,7 +24,7 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
   Widget build(BuildContext context) {
     drawingController.setStyle(
         color: Colors.black,
-        strokeWidth: 8,
+        strokeWidth: 2,
         isAntiAlias: true,
         style: PaintingStyle.stroke,
         strokeCap: StrokeCap.round);
@@ -157,7 +157,7 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                           )),
                           child: ListTile(
                             leading: Image.asset(
-                              'asset/devider.png',
+                              'asset/divider.png',
                               height: 30,
                               width: 30,
                             ),
