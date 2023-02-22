@@ -58,42 +58,23 @@ class Arrow extends PaintContent {
     final dY = p2.dy - p1.dy;
     final angle = math.atan2(dY, dX);
 
-    debugPrint(startPoint.toString());
-    debugPrint(nowPoint.toString());
-
     A = Offset(nowPoint.dx, nowPoint.dy);
-    debugPrint('==> A : ${A.toString()}');
 
     B = Offset(startPoint.dx, startPoint.dy);
-    debugPrint('==> B : ${B.toString()}');
 
     C = Offset(nowPoint.dx, nowPoint.dy);
-    debugPrint('==> C : ${C.toString()}');
 
     D = Offset(p2.dx - arrowSize * math.cos(angle - arrowAngle),
         p2.dy - arrowSize * math.sin(angle - arrowAngle));
-    debugPrint('==> D : ${D.toString()}');
-
-//
-
-    // D = Offset(nowPoint.dx, nowPoint.dy - (startPoint.dy) / 2);
-    // debugPrint('==> D : ${D.toString()}');
 
     E = Offset(nowPoint.dx, nowPoint.dy);
-    debugPrint('==> E : ${E.toString()}');
 
     F = Offset(p2.dx - arrowSize * math.cos(angle + arrowAngle),
         p2.dy - arrowSize * math.sin(angle + arrowAngle));
-    debugPrint('==> F : ${F.toString()}');
-
-    // F = Offset(nowPoint.dx - (startPoint.dx) / 2, nowPoint.dy);
-    // debugPrint('==> F : ${F.toString()}');
 
     H = Offset(nowPoint.dx, nowPoint.dy);
-    debugPrint('==> H : ${H.toString()}');
 
     G = nowPoint;
-    debugPrint('==> G : ${G.toString()}');
   }
 
   @override
