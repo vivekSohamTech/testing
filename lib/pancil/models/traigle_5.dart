@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
 import 'package:flutter_drawing_board/paint_extension.dart';
 
-class Star extends PaintContent {
-  Star();
+class Triangle_5 extends PaintContent {
+  Triangle_5();
 
-  Star.data({
+  Triangle_5.data({
     required this.startPoint,
     required this.A,
     required this.B,
@@ -18,12 +18,11 @@ class Star extends PaintContent {
     required this.I,
     required this.J,
     required this.K,
-    required this.L,
     required Paint paint,
   }) : super.paint(paint);
 
-  factory Star.fromJson(Map<String, dynamic> data) {
-    return Star.data(
+  factory Triangle_5.fromJson(Map<String, dynamic> data) {
+    return Triangle_5.data(
       startPoint: jsonToOffset(data['startPoint'] as Map<String, dynamic>),
       A: jsonToOffset(data['A'] as Map<String, dynamic>),
       B: jsonToOffset(data['B'] as Map<String, dynamic>),
@@ -36,13 +35,11 @@ class Star extends PaintContent {
       I: jsonToOffset(data['I'] as Map<String, dynamic>),
       J: jsonToOffset(data['J'] as Map<String, dynamic>),
       K: jsonToOffset(data['K'] as Map<String, dynamic>),
-      L: jsonToOffset(data['L'] as Map<String, dynamic>),
       paint: jsonToPaint(data['paint'] as Map<String, dynamic>),
     );
   }
 
   Offset startPoint = Offset.zero;
-
   Offset A = Offset.zero;
   Offset B = Offset.zero;
   Offset C = Offset.zero;
@@ -54,50 +51,55 @@ class Star extends PaintContent {
   Offset I = Offset.zero;
   Offset J = Offset.zero;
   Offset K = Offset.zero;
-  Offset L = Offset.zero;
 
   @override
   void startDraw(Offset startPoint) => this.startPoint = startPoint;
 
   @override
   void drawing(Offset nowPoint) {
-    A = Offset(startPoint.dx, startPoint.dy);
+    debugPrint(nowPoint.toString());
+    debugPrint(startPoint.toString());
+
+    A = Offset(
+        startPoint.dx + (nowPoint.dx - startPoint.dx) / 2, startPoint.dy);
     debugPrint('==> A : ${A.toString()}');
 
-    B = Offset(startPoint.dx + 2, startPoint.dy - 5);
+    B = Offset(startPoint.dx, nowPoint.dy);
     debugPrint('==> B : ${B.toString()}');
 
-    C = Offset(startPoint.dx + 5, startPoint.dy);
+    C = Offset(
+        startPoint.dx - (nowPoint.dx - startPoint.dx + 40) / 2, nowPoint.dy);
     debugPrint('==> C : ${C.toString()}');
 
-    D = Offset(startPoint.dx + 10, startPoint.dy);
+    D = Offset(nowPoint.dx + (nowPoint.dx - startPoint.dx) / 3,
+        nowPoint.dy + (nowPoint.dx - startPoint.dx + 50) / 2);
     debugPrint('==> D : ${D.toString()}');
 
-    E = Offset(startPoint.dx + 6, startPoint.dy + 3);
+    E = Offset(startPoint.dx - 20, startPoint.dy);
     debugPrint('==> E : ${E.toString()}');
 
-    F = Offset(startPoint.dx + 8, startPoint.dy + 8);
+    F = Offset(startPoint.dx - (nowPoint.dx - startPoint.dx) / 2,
+        startPoint.dy + (nowPoint.dx - startPoint.dx - 30) / 2);
     debugPrint('==> F : ${F.toString()}');
 
-    G = Offset(startPoint.dx + 3, startPoint.dy + 6);
+    G = Offset(startPoint.dx - (nowPoint.dx - startPoint.dx) / 2,
+        startPoint.dy + (nowPoint.dx - startPoint.dx - 30) / 2);
     debugPrint('==> G : ${G.toString()}');
 
-    H = Offset(startPoint.dx - 2, startPoint.dy + 8);
+    H = Offset(
+        startPoint.dx + (nowPoint.dx - startPoint.dx) / 2, startPoint.dy);
     debugPrint('==> H : ${H.toString()}');
 
-    I = Offset(startPoint.dx, startPoint.dy + 3);
+    I = Offset(
+        nowPoint.dx + (nowPoint.dx - startPoint.dx) / 2, startPoint.dy - 20);
     debugPrint('==> I : ${I.toString()}');
 
-    J = Offset(startPoint.dx - 5, startPoint.dy);
+    J = Offset(
+        startPoint.dx + (nowPoint.dx - startPoint.dx) / 2, startPoint.dy + 40);
     debugPrint('==> J : ${J.toString()}');
 
-    K = Offset(startPoint.dx, startPoint.dy);
-    debugPrint('==> K : ${K.toString()}');
-
-    L = startPoint;
-    debugPrint('==> L : ${L.toString()}');
-
-    
+    K = nowPoint;
+    debugPrint('==> E : ${E.toString()}');
   }
 
   @override
@@ -114,14 +116,12 @@ class Star extends PaintContent {
       ..lineTo(I.dx, I.dy)
       ..lineTo(J.dx, J.dy)
       ..lineTo(K.dx, K.dy)
-      ..lineTo(L.dx, L.dy)
       ..close();
-
     canvas.drawPath(path, paint);
   }
 
   @override
-  Star copy() => Star();
+  Triangle_5 copy() => Triangle_5();
 
   @override
   Map<String, dynamic> toJson() {
@@ -138,7 +138,6 @@ class Star extends PaintContent {
       'I': I.toJson(),
       'J': J.toJson(),
       'K': K.toJson(),
-      'L': L.toJson(),
       'paint': paint.toJson(),
     };
   }

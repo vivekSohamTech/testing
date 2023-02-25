@@ -86,7 +86,8 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            drawingController.setPaintContent = Circle();
+                            drawingController.setPaintContent =
+                                Circle(isEllipse: false);
                           },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
