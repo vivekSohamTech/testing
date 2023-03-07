@@ -17,7 +17,6 @@ class _KeyboardSelectorState extends State<KeyboardSelector> {
   bool isKeyboard = true;
   @override
   Widget build(BuildContext context) {
-
     final Map<String, dynamic> testLine1 = <String, dynamic>{
       'type': 'StraightLine',
       'startPoint': <String, dynamic>{
@@ -42,7 +41,7 @@ class _KeyboardSelectorState extends State<KeyboardSelector> {
     };
 
     void addTestLine() {
-    drawingController.addContent(StraightLine.fromJson(testLine1));
+      drawingController.addContent(StraightLine.fromJson(testLine1));
       // drawingController
       //     .addContents(<PaintContent>[StraightLine.fromJson(_testLine2)]
       // );
@@ -110,6 +109,9 @@ class _KeyboardSelectorState extends State<KeyboardSelector> {
       }
     }
 
+    List<TextData> fields = [];
+    TextEditingController controller = TextEditingController();
+
     return KeyboardSizeProvider(
       smallSize: 300,
       child: OrientationBuilder(builder: (context, orientation) {
@@ -118,160 +120,259 @@ class _KeyboardSelectorState extends State<KeyboardSelector> {
           child: Scaffold(
               appBar: AppBar(),
               body: Consumer<ScreenHeight>(
-                builder: (context, value, child) => Column(
-                  children: [
-                    Expanded(
-                        child: TextField(
-                      readOnly: !isKeyboard ? true : false,
-                    )),
-                    if (value.isOpen || isKeyboard == false)
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SizedBox(
-                          height: orientation == Orientation.landscape
-                              ? MediaQuery.of(context).size.height * 0.09
-                              : MediaQuery.of(context).size.height * 0.05,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
+                builder: (context, value, child) => StatefulBuilder(
+                  builder: (context, setState) => Column(
+                    children: [
+                      Expanded(
+                          child: TextField(
+                        readOnly: !isKeyboard ? true : false,
+                      )),
+                      Container(
+                        color: Colors.amber,
+                        height: 100,
+                        child: ListView.builder(
+                          physics: const ClampingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          // reverse: true,
+                          itemCount: fields.length,
+                          itemBuilder: (context, index) {
+                            // return SizedBox(
+                            //   height: 60,
+                            //   child: fields[index].image.isEmpty
+                            //       ? Text(fields[index].text ?? '')
+                            //       : Image.memory(
+                            //           base64Decode(fields[index].image ?? '')),
+                            // );
+                            return Row(
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      FocusScope.of(context).requestFocus();
-                                      isKeyboard = true;
-                                    });
-                                  },
-                                  child: SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        const Text(
-                                          'Keyboard',
-                                          style: TextStyle(fontSize: 22),
-                                        ),
-                                        SizedBox(
-                                          height: orientation ==
-                                                  Orientation.landscape
-                                              ? 12
-                                              : 8,
-                                        ),
-                                        Divider(
-                                          thickness: 5,
-                                          color: isKeyboard
-                                              ? const Color.fromARGB(
-                                                  255, 2, 87, 16)
-                                              : Colors.transparent,
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                if (fields[index].image.isNotEmpty)
+                                  Image.memory(
+                                      base64Decode(fields[index].image)),
+                                Text(
+                                  fields[index].text ?? '',
+                                  style: const TextStyle(fontSize: 60),
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      isKeyboard = false;
-                                    });
-                                  },
-                                  child: SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        const Text(
-                                          'Custom Symbol',
-                                          style: TextStyle(fontSize: 22),
-                                        ),
-                                        SizedBox(
-                                          height: orientation ==
-                                                  Orientation.landscape
-                                              ? 12
-                                              : 8,
-                                        ),
-                                        Divider(
-                                          thickness: 5,
-                                          color: isKeyboard
-                                              ? Colors.transparent
-                                              : const Color.fromARGB(
-                                                  255, 2, 87, 16),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const Spacer(),
-                                SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.15,
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          elevation:
-                                              MaterialStateProperty.all(0),
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.transparent)),
-                                      child: const Text(
-                                        'Close',
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.blue),
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          isKeyboard = true;
-                                          FocusScope.of(context).unfocus();
-                                        });
-                                      },
-                                    )),
-                                SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.15,
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)))),
-                                      child: const Text(
-                                        'Add',
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      onPressed: () {
-                                        // _addTestLine();
-                                        getImageData();
-                                      },
-                                    )),
                               ],
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              final controller = TextEditingController();
+                              // final field = TextField(
+                              //   controller: controller,
+                              //   decoration: const InputDecoration(hintText: 'A'),
+                              // );
+
+                              setState(() {
+                                // textData.add(controller);
+                                fields.add(TextData(text: 'A', image: ''));
+                              });
+                              debugPrint(fields.length.toString());
+                            },
+                            child: const Text('Text'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              final data =
+                                  (await drawingController.getImageData())
+                                      ?.buffer
+                                      .asUint8List();
+                              debugPrint('==> Data : $data');
+
+                              var image = await getImageCompress(data!);
+                              debugPrint('==> Image : ${image.toString()}');
+
+                              var encoded2 = base64.encode(image);
+                              debugPrint('Encoded 2: $encoded2');
+
+                              setState(() {
+                                fields.add(TextData(image: encoded2));
+                              });
+                            },
+                            child: const Text('Image'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                fields.removeLast();
+                              });
+                            },
+                            child: const Text('remove'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                FocusScope.of(context).requestFocus();
+                              });
+                            },
+                            child: const Text('unfocus'),
+                          )
+                        ],
+                      ),
+                      if (value.isOpen || isKeyboard == false)
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox(
+                            height: orientation == Orientation.landscape
+                                ? MediaQuery.of(context).size.height * 0.09
+                                : MediaQuery.of(context).size.height * 0.05,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        FocusScope.of(context).requestFocus();
+                                        isKeyboard = true;
+                                      });
+                                    },
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.2,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          const Text(
+                                            'Keyboard',
+                                            style: TextStyle(fontSize: 22),
+                                          ),
+                                          SizedBox(
+                                            height: orientation ==
+                                                    Orientation.landscape
+                                                ? 12
+                                                : 8,
+                                          ),
+                                          Divider(
+                                            thickness: 5,
+                                            color: isKeyboard
+                                                ? const Color.fromARGB(
+                                                    255, 2, 87, 16)
+                                                : Colors.transparent,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        isKeyboard = false;
+                                      });
+                                    },
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.2,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          const Text(
+                                            'Custom Symbol',
+                                            style: TextStyle(fontSize: 22),
+                                          ),
+                                          SizedBox(
+                                            height: orientation ==
+                                                    Orientation.landscape
+                                                ? 12
+                                                : 8,
+                                          ),
+                                          Divider(
+                                            thickness: 5,
+                                            color: isKeyboard
+                                                ? Colors.transparent
+                                                : const Color.fromARGB(
+                                                    255, 2, 87, 16),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.15,
+                                      child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            elevation:
+                                                MaterialStateProperty.all(0),
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.transparent)),
+                                        child: const Text(
+                                          'Close',
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blue),
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            isKeyboard = true;
+                                            FocusScope.of(context).unfocus();
+                                          });
+                                        },
+                                      )),
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.15,
+                                      child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)))),
+                                        child: const Text(
+                                          'Add',
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        onPressed: () {
+                                          // _addTestLine();
+                                          getImageData();
+                                        },
+                                      )),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    else
-                      Container(),
-                    if (!isKeyboard) const CustomKeyboard()
-                  ],
+                        )
+                      else
+                        Container(),
+                      if (!isKeyboard) const CustomKeyboard()
+                    ],
+                  ),
                 ),
               )),
         );
       }),
     );
   }
+}
+
+class TextData {
+  String? text;
+  String image;
+  TextData({required this.image, this.text});
 }

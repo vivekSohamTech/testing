@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
+import 'package:flutter_shapes/flutter_shapes.dart';
 import 'package:testing/pancil/models/Star.dart';
 import 'package:testing/pancil/models/arrow.dart';
 
@@ -17,8 +20,40 @@ class CustomKeyboard extends StatefulWidget {
 }
 
 class _CustomKeyboardState extends State<CustomKeyboard> {
+  // var style = const TextStyle(fontSize: 18);
+  // var iconSize = 30.0;
   var style = const TextStyle(fontSize: 18);
   var iconSize = 30.0;
+  Canvas? canvas;
+  Paint? paint;
+  Offset? center;
+  double? angle;
+  var radius;
+  void drawStar(int num, {double initialAngle = 0}) {
+    rotate(() {
+      final Path path = Path();
+      for (int i = 0; i < num; i++) {
+        final double radian = radians(initialAngle + 360 / num * i.toDouble());
+        final double x = radius * (i.isEven ? 0.5 : 1) * cos(radian);
+        final double y = radius * (i.isEven ? 0.5 : 1) * sin(radian);
+        if (i == 0) {
+          path.moveTo(x, y);
+        } else {
+          path.lineTo(x, y);
+        }
+      }
+      path.close();
+      canvas!.drawPath(path, paint!);
+    });
+  }
+
+  void rotate(VoidCallback callback) {
+    canvas!.save();
+    canvas!.translate(center!.dx, center!.dy);
+    canvas!.rotate(angle ?? 0);
+    callback();
+    canvas!.restore();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +164,8 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            drawingController.setPaintContent = Star();
+                            // drawingController.setPaintContent = Star();
+                            // drawStar()
                           },
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
@@ -196,7 +232,8 @@ class _CustomKeyboardState extends State<CustomKeyboard> {
                 Expanded(
                   child: Container(
                     color: Colors.white,
-                    padding: const EdgeInsets.all(100),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 150, vertical: 100),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: DottedBorder(

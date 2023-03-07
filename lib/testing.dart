@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class Testing extends StatefulWidget {
@@ -12,9 +11,9 @@ class Testing extends StatefulWidget {
 class _TestingState extends State<Testing> {
   @override
   void initState() {
-    
     super.initState();
   }
+
   TextEditingController textController = TextEditingController();
   // String? data;
   bool isKeyboard = true;
